@@ -1,6 +1,7 @@
 import { first } from "lodash"
 import userData from "../fixtures/user-data.json"
 import { equal } from "assert-plus"
+import { select } from "async"
 
 
 describe('Orange HRM Tests', () => {
@@ -18,7 +19,11 @@ describe('Orange HRM Tests', () => {
     genericField: ".oxd-input--active",
     dataField: "[placeholder='yyyy-dd-mm']",
     datacloseButton: ".--close",
-    submitButton: "[type='submit']"
+    submitButton: "[type='submit']",
+    checkBoxButton: ".oxd-select-text--arrow",
+    selectNationality: ".oxd-select-dropdown > :nth-child(27)",
+    selectMaritalStatus: ":nth-child(4) > span"
+   
   }
 
   it.only('Login - Success', () => {
@@ -37,8 +42,12 @@ describe('Orange HRM Tests', () => {
     cy.get(selectorsList.genericField).eq(5).clear().type('driverLicenseTest')
     cy.get(selectorsList.genericField).eq(6).clear().type('2025-03-25')
     cy.get(selectorsList.datacloseButton).click()
-    cy.get(selectorsList.submitButton).eq(0).click()
-    cy.get('body').should('contain', 'Successfully Updated')
+    cy.get(selectorsList.checkBoxButton).eq(0).click()
+    cy.get(selectorsList.selectNationality).click()
+    cy.get(selectorsList.checkBoxButton).eq(1).click()
+    cy.get(selectorsList.selectMaritalStatus).click()
+    cy.get(selectorsList.submitButton).eq(1).click({force:true})
+    cy.get('body').should('contain', 'Successfully Saved')
 
   })
   it('Login - Fail', () => {
