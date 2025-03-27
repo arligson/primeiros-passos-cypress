@@ -4,17 +4,18 @@
 // import { select } from "async"
 import userData from "../fixtures/user-data.json"
 import loginPage from "../pages/loginPage"
+import dashBoardPage from "../pages/dashBoardPage"
+import menuPage from "../pages/menuPage"
 
 const LoginPage = new loginPage()
+const DashBoardPage = new dashBoardPage()
+const MenuPage = new menuPage()
 
 
 describe('Orange HRM Tests', () => {
   const selectorsList = {
-    
-    sectionTitleTopBar: ".oxd-topbar",
-    dashboardGrid: ".orangehrm-dashboard-grid",
-  
-    myInfoButton: "[href='/web/index.php/pim/viewMyDetails']",
+
+    // myInfoButton: "[href='/web/index.php/pim/viewMyDetails']",
     firstNameField: "[name='firstName']",
     lastNameField: "[name='lastName']",
     middleName: "[name='middleName']",
@@ -30,13 +31,13 @@ describe('Orange HRM Tests', () => {
 
   it.only('Login - Success', () => {
     LoginPage.acessLoginPage()
-    LoginPage.loginWithUser(userData.userSuccess.username, userData.userSuccess.password)
-    // cy.get(selectorsList.usernameField).type(userData.userSuccess.username)
-    // cy.get(selectorsList.passwordField).type(userData.userSuccess.password)
-    // cy.get(selectorsList.loginButton).click()
-    
-    // cy.location("pathname").should("equal", "/web/index.php/dashboard/index")
-    // cy.get(selectorsList.dashboardGrid)
+    LoginPage.loginWithAnyUser(userData.userSuccess.username, userData.userSuccess.password)
+    DashBoardPage.checkDashBoardPage()
+    MenuPage.acessAdminPage()
+    MenuPage.acessMyInfo()
+
+
+
     // cy.get(selectorsList.myInfoButton).click()
     // cy.get(selectorsList.firstNameField).clear().type('firstNameTest')
     // cy.get(selectorsList.middleName).clear().type('middleNameTest')
